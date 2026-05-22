@@ -1,0 +1,9 @@
+flask
+scikit-learn
+pandas
+numpy
+pyttsx3
+twilio
+vosk
+sounddevice
+python-dotenv

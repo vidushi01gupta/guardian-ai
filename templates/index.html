@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Voice Assistant</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="chat-container">
+    <div class="header">
+        <span class="symbol">🛡️</span>
+        <span class="title">Guardian AI</span>
+    </div>
+    <div class="chatbox" id="chatbox"></div>
+    <div class="input-area">
+        <input type="text" id="msg" placeholder="Type a message...">
+        <button onclick="send()">Send</button>
+        <button id="micBtn" onclick="voice()">🎤</button>
+        <div id="listeningStatus" class="listening-status">
+    <div class="wave">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <p id="statusText">Click mic to speak</p>
+</div>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
