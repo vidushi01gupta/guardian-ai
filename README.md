@@ -88,7 +88,7 @@ Guardian-AI
 ## 🚀 Setup Instructions
 ```bash
    1️⃣ Clone the repository
-    git clone https://github.com/yourusername/Guardian-AI.git
+    git clone https://github.com/vidushi01gupta/guardian-ai.git
     cd Guardian-AI
     
     2️⃣ Install dependencies
@@ -97,7 +97,7 @@ Guardian-AI
     3️⃣ Install Ollama
     Download and install Ollama.
     Then run:
-    ollama pull phi3
+    ollama pull mistral
     
     4️⃣ Open Browser
     http://127.0.0.1:5000
