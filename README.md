@@ -70,7 +70,7 @@ Guardian-AI
   
 ### AI / LLM
 - Ollama
-- Phi-3 Mini
+- Mistral
   
 ### Voice Processing
 - Vosk
