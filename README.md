@@ -89,7 +89,7 @@ Guardian-AI
 ```bash
    1️⃣ Clone the repository
     git clone https://github.com/vidushi01gupta/guardian-ai.git
-    cd Guardian-AI
+    cd guardian-ai
     
     2️⃣ Install dependencies
     pip install -r requirements.txt
@@ -105,7 +105,7 @@ Guardian-AI
 ##  Demo 
 ### 💻 Text Interaction
 - User types a message in chat
-- AI responds instantly
+- AI responds back
 ### 🎤 Voice Interaction
 - Click microphone
 - Speak command
