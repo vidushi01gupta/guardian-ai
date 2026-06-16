@@ -17,6 +17,7 @@ MODEL = os.getenv(
 
 
 def get_ai_response(message):
+    print("MODEL.PY FUNCTION CALLED")
 
     prompt = f"""
 You are Guardian AI, a smart and helpful AI voice assistant.
@@ -50,14 +51,19 @@ Assistant:
             timeout=60
         )
 
-        if response.status_code == 200:
+        
 
+
+        print("STATUS CODE:", response.status_code)
+        print("RAW RESPONSE:", response.text)
+
+        if response.status_code == 200:
             return response.json()["response"].strip()
 
-        return "AI model not responding."
+        return f"AI model not responding. Status: {response.status_code}"
 
     except Exception as e:
 
-        print("Error:", e)
+        print("OLLAMA ERROR:", e)
 
         return "Unable to connect to AI model."

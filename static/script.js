@@ -1,4 +1,6 @@
+console.log("SCRIPT LOADED");
 function send() {
+    console.log("SEND CLICKED");
 
     let message = document.getElementById("msg").value
 
@@ -14,6 +16,7 @@ function send() {
             let longitude = position.coords.longitude
 
             let location = latitude + "," + longitude
+            console.log("ABOUT TO SEND FETCH");
 
             fetch("/chat", {
                 method: "POST",
@@ -23,17 +26,24 @@ function send() {
                     location: location
                 })
             })
-            .then(res => res.json())
-            .then(data => {
+            .then(res => {
+    console.log("FETCH RESPONSE:", res.status);
+    return res.json();
+})
+.then(data => {
+    console.log("DATA RECEIVED:", data);
 
-                chat.innerHTML += `<div class="bot">${data.reply}</div>`
-
-                chat.scrollTop = chat.scrollHeight
+    chat.innerHTML += `<div class="bot">${data.reply}</div>`;
+    chat.scrollTop = chat.scrollHeight
 
                 
-                 speak(data.reply)
-
-            })
+                 
+})
+.catch(err => {
+    console.error("FETCH ERROR:", err);
+});
+            
+            
 
         })
 
@@ -67,7 +77,7 @@ function voice() {
             chat.innerHTML += `<div class="bot">${data.reply}</div>`;
             chat.scrollTop = chat.scrollHeight;
 
-            speak(data.reply);
+       
         })
         .catch(err => {
             console.log("Error:", err);

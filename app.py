@@ -1,3 +1,4 @@
+print("MY APP.PY IS LOADED")
 import logging
 import sqlite3
 from threading import Thread
@@ -12,7 +13,7 @@ load_dotenv()
 from background_listener import start_background_listening
 from emergency_module import SAFE_WORD, trigger_emergency
 from voice_input import listen
-from model import get_ai_response
+from model import get_ai_response as get_ai_model_response
 
 # ------------------------------------
 # App Setup
@@ -23,22 +24,32 @@ app = Flask(__name__)
 logging.basicConfig(level=logging.INFO)
 
 # Offline Text-to-Speech
-engine = pyttsx3.init()
+
 
 # ------------------------------------
 # Voice Functions
 # ------------------------------------
 
-def speak(text: str):
-    engine.say(text)
-    engine.runAndWait()
+def speak(text):
+    try:
+        print("SPEAKING:", text)
 
+        engine = pyttsx3.init()
+        engine.say(text)
+        engine.runAndWait()
+        engine.stop()
+
+        print("DONE SPEAKING")
+
+    except Exception as e:
+        print("TTS ERROR:", e)
 
 def speak_async(text: str):
     Thread(target=speak, args=(text,)).start()
 
 #ai response
 def get_ai_response(message: str):
+    print("AI FUNCTION CALLED")
 
     normalized = message.strip().lower()
 
@@ -58,10 +69,14 @@ def get_ai_response(message: str):
         return f"Today is {date.today():%B %d, %Y}."
 
     try:
-        return get_ai_response(normalized)
-
-    except Exception:
-        return "I didn't understand that."
+        print("CALLING MODEL.PY")
+        result = get_ai_model_response(normalized)
+        print("MODEL RETURNED:", result)
+        return result
+    
+    except Exception as e:
+        print("AI ERROR:", e)
+        return "TEST_ERROR_MESSAGE"
 
 
 # ------------------------------------
@@ -101,10 +116,12 @@ def home():
 
 @app.route("/chat", methods=["POST"])
 def chat():
+    print("CHAT ROUTE HIT") 
 
     data = request.get_json()
 
     message = data.get("message", "")
+    print("MESSAGE:", message) 
 
     location = data.get("location",  "LOCATION_NOT_AVAILABLE")
 
@@ -116,8 +133,10 @@ def chat():
         reply = "Your order is on the way."
 
     else:
+        print("BEFORE AI CALL")
 
         reply = get_ai_response(message)
+        print("AFTER AI CALL")
 
     speak_async(reply)
 
@@ -157,9 +176,9 @@ def voice():
 if __name__ == "__main__":
 
     # Start background emergency listener
-    Thread(
-        target=start_background_listening,
-        daemon=True
-    ).start()
+    #Thread(
+    #    target=start_background_listening,
+     #   daemon=True
+   # ).start()
 
-    app.run(debug=True)
+    app.run(debug=True, use_reloader=False)
